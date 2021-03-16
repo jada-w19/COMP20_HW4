@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+    <style>
+        body{
+            background-color: rgb(255, 125, 125);
+            padding: 20px;
+        }
+        h1{
+            text-align: center; 
+            background-color: white;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 100px;
+            color: rgb(0, 0, 0);
+            border: 10px dotted red
+        }
+        h2{
+            text-align: center; 
+            color: rgb(0, 0, 0);
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 40px;
+            border: 10px solid red;
+            background-color: white;
+           
+        }
+        h3{
+            text-align: right; 
+            padding-right: 10px;
+            color: rgb(0, 0, 0);
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 20px;
+        }
+
+        p{
+            padding-left: 10px;
+            color: rgb(0, 0, 0);
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 20px;
+        }
+
+        .column {
+            float:left;
+            width: 30%;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .button{
+            background-color: white;
+            color: black;
+            border: 5px solid red;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 20px;        
+        }
+
+    </style>
+
+    <body>
+        
+        <h1>RECEIPT</h1>
+        <h2>Your Order Will Be Ready Soon!</h2>
+        <div class="row">
+            <div class="column">
+              <img src="hotdog.jpg" alt="Hot Dogs" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="fries.jpg" alt="Fries" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="soda2.jpg" alt="Soda" style="width:100%">
+            </div>
+        </div>
+        <h2> ITEMS ORDERED: </h2>
+        <p id = "hot dogs"></p>
+        <p id = "french fries"></p>
+        <p id = "drinks"></p>
+        <h3 id = "subtotal"></h3>
+        <h3 id = "discount"></h3>
+        <h3 id = "tax"></h3>
+        <h3 id = "total"></h3>
+        <a href ="joeshotdogs_index.html" target ="_blank" ><button class = "button">HOME</button></a>
+
+
+        <script> 
+            var hotdogs = 0;
+            var frenchfries = 0;
+            var drinks = 0; 
+            var subtotal;
+            
+            function calculate_subtotal(hotdogs, frenchfries, drinks){
+                var sub = (hotdogs * 3.25) + (frenchfries * 2.00) + (drinks * 1.50); 
+                sub = sub.toFixed(2);
+                return sub;
+            }
+
+            function discount(subtotal){
+                var dis = subtotal - (subtotal * 0.10);
+                dis = dis.toFixed(2);
+                return dis;
+            }
+
+            function tax(subtotal){
+                var tax = (subtotal * 0.0625);
+                tax = tax.toFixed(2);
+                return tax;
+            }
+            
+            
+            function total_wtax(subtotal){
+                var tot = Number(subtotal) + Number(tax(subtotal));
+                tot = tot.toFixed(2);
+                return tot;
+            }
+
+            hotdogs = Number(prompt("Hotdog Quantity: "));
+            frenchfries = Number(prompt("French Fry Quantity: "));
+            drinks = Number(prompt("Drink Quantity: "));
+            subtotal = calculate_subtotal(hotdogs, frenchfries, drinks);
+            
+            if (Number.isNaN(subtotal)){
+                alert("INVALID ENTRY. REFRESH AND TRY AGAIN");
+            }
+            else{
+                document.getElementById("hot dogs").innerHTML = hotdogs + " HOT DOGS ";
+                document.getElementById("french fries").innerHTML = frenchfries + " FRENCH FRIES ";                
+                document.getElementById("drinks").innerHTML = drinks + " DRINKS "; 
+                document.getElementById("subtotal").innerHTML = " SUBTOTAL: $" + subtotal;               
+                if(subtotal >= 20.00){
+                    subtotal = discount(subtotal);
+                    document.getElementById("discount").innerHTML = "10% DISCOUNT: $" + subtotal;
+                }
+                var taxes = tax(subtotal);
+                document.getElementById("tax").innerHTML = "TAX: $" + taxes;
+                var total = total_wtax(subtotal);
+                document.getElementById("total").innerHTML = "TOTAL: $" + total;     
+            }
+        </script>
+
+    </body>
+</html>
+
